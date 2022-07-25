@@ -15,14 +15,11 @@ and
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
-
 python producer.py
 ```
 in other shell run
 ```bash
 source .venv/bin/activate
-pip install -r requirements.txt
-
 python consumer.py
 ```
 to see the magic!
