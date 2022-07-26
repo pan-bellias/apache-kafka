@@ -1,9 +1,7 @@
-from kafka import KafkaConsumer
-import msgpack
+from kafka import KafkaConsumer, TopicPartition
 import env as e
 
-# Deserialize msgpack-encoded values
-consumer = KafkaConsumer(e.topic, value_deserializer=msgpack.loads)
-consumer.subscribe(['msgpackfoo'])
-for msg in consumer:
-    assert isinstance(msg.value, dict)
+# manually assign the partition list for the consumer
+consumer = KafkaConsumer(e.topic, bootstrap_servers=[e.bootstrap_servers])
+consumer.assign([TopicPartition('foobar', 2)])
+msg = next(consumer)

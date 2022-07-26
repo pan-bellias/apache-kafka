@@ -1,7 +1,7 @@
-from kafka import KafkaConsumer, TopicPartition
+from kafka import KafkaConsumer
 import env as e
 
-# manually assign the partition list for the consumer
-consumer = KafkaConsumer(bootstrap_servers=e.bootstrap_servers)
-consumer.assign([TopicPartition('foobar', 2)])
-msg = next(consumer)
+# join a consumer group for dynamic partition assignment and offset commits
+consumer = KafkaConsumer(e.topic, group_id=e.group)
+for msg in consumer:
+    print (msg)

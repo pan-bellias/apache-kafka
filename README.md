@@ -20,6 +20,6 @@ python producer.py
 in other shell run
 ```bash
 source .venv/bin/activate
-python consumer.py
+python consumerX.py # where x is a number from 1 to 3. Every consumer is implemented with different way
 ```
 to see the magic!
