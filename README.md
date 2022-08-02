@@ -27,12 +27,12 @@ and
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
-python producer-consumer.py
+python consumer.py
 ```
 in other shell run
 ```bash
 source .venv/bin/activate
-python consumer.py
+python producer-consumer.py
 ```
 and in other shell run
 ```bash
