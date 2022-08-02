@@ -1,10 +1,22 @@
-# Apache Kafka - Python Example
+# Apache Kafka - Python Temperature
 
-## Kafka Deployment using Helm charts
-
-### Port forward
+## Kafka Docker Deployment
 ```bash
-kubectl port-forward svc/kafka 9092
+cd docker && docker-compose up -d && cd ..
+
+# create topics my-topic-a and my-topic-b
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic my-topic-a
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic my-topic-b
+```
+
+## dotenv variables
+```bash
+cp .env.example .env
+```
+```nano
+TOPIC_A='my-topic-a'
+TOPIC_B='my-topic-b'
+BOOTSTRAP_SERVER='localhost:9092'
 ```
 
 ## Run Example
@@ -15,11 +27,16 @@ and
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
-python producer.py
+python producer-consumer.py
 ```
 in other shell run
 ```bash
 source .venv/bin/activate
-python consumerX.py # where x is a number from 1 to 3. Every consumer is implemented with different way
+python consumer.py
+```
+and in other shell run
+```bash
+source .venv/bin/activate
+python producer.py
 ```
 to see the magic!

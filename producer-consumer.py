@@ -1,6 +1,6 @@
 from kafka import KafkaConsumer
 import env as e
-import json
+import json, time
 
 consumer = KafkaConsumer(
     e.topic_b,
@@ -9,14 +9,23 @@ consumer = KafkaConsumer(
 )
 
 i=1
+prev_ts = 0
 for c in consumer:
-    if i == 1:
-        T = c.value
-        print(T)
-    if i == 2:
-        ph = c.value
-        print(ph)
-        break
+    value = c.value
+    ts = time.time()
+    if i%2==0:
+        print("PH: ", value)
+        ph = value
+    else:
+        print("Temperature: ", value)
+        T = value
+    if prev_ts != 0:
+        diff = ts-prev_ts
+        prev_ts = ts
+        if diff <= 2.5:
+            print(f"Success!\nT={T} and ph={ph}\nsec={diff}")
+        else:
+            print("Wrong period!")
+    else:
+        prev_ts = ts
     i+=1
-
-print(f"Success!\n T={T} and ph={ph}")
