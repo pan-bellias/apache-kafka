@@ -1,38 +1,31 @@
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaConsumer
 import env as e
-import math, json
-import threading
+import json, time
 
 consumer = KafkaConsumer(
-    e.topic_a,
+    e.topic_b,
     bootstrap_servers=[e.bootstrap_servers],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
 )
 
-def send_ph():
-    threading.Timer(7.0, send_ph).start()
-    for c in consumer:
-        T = c.value
-        break
-
-    if T > 4:
-        ph = 3
+i=1
+prev_ts = 0
+for c in consumer:
+    value = c.value
+    ts = time.time()
+    if i%2==0:
+        print("PH: ", value)
+        ph = value
     else:
-        m = 6.4
-        d = 0.15
-        ph = 1/(math.sqrt(2*math.pi)*d)*math.exp(-(T-m)**2/(2*d**2))
-
-    print(f"PH = {ph}")
-    if ph < 0: print("Warning! PH is negative number!")
-    elif ph > 14: print("Warning! PH is greater than 14!")
-    else: print("Successful PH Calculation")
-
-    producer = KafkaProducer(
-        bootstrap_servers=[e.bootstrap_servers],
-        value_serializer=lambda m: json.dumps(m).encode('utf-8')
-    )
-
-    producer.send(e.topic_b, ph)
-    producer.flush()
-
-send_ph()
+        print("Temperature: ", value)
+        T = value
+    if prev_ts != 0:
+        diff = ts-prev_ts
+        prev_ts = ts
+        if diff <= 2.5:
+            print(f"Success!\nT={T} and ph={ph}\nsec={diff}")
+        else:
+            print("Wrong period!")
+    else:
+        prev_ts = ts
+    i+=1
