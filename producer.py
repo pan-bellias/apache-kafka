@@ -1,8 +1,8 @@
 from kafka import KafkaProducer
-from kafka.errors import KafkaError
 
 import env as e
 import numpy as np
+import msgpack
 
 T = np.random.gamma(shape=2.0, scale=2.0)
 while not 2 < T < 40:
@@ -10,22 +10,8 @@ while not 2 < T < 40:
 
 print(f"Temperature: {T} oC")
 
-producer = KafkaProducer(bootstrap_servers=[e.bootstrap_servers])
+producer = KafkaProducer(bootstrap_servers=[e.bootstrap_servers], value_serializer=msgpack.dumps)
 
-future = producer.send(e.topic_a, T)
-try:
-    record_metadata = future.get(timeout=50)
-except KafkaError:
-    print(str(KafkaError))
-    pass
+producer.send(e.topic_a, {'temperature': T})
 
-print(f"Temperature with value {record_metadata.value} oC sent to script 2")
-
-future = producer.send(e.topic_b, T)
-try:
-    record_metadata = future.get(timeout=50)
-except KafkaError:
-    print(str(KafkaError))
-    pass
-
-print(f"Temperature with value {record_metadata.value} oC sent to script 3")
+producer.send(e.topic_b, {'temperature': T})

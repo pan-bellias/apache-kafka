@@ -3,9 +3,13 @@ from kafka.errors import KafkaError
 import env as e
 import math
 
-consumer = KafkaConsumer(e.topic_a, group_id=e.group, bootstrap_servers=[e.bootstrap_servers])
+consumer = KafkaConsumer(e.topic_a, bootstrap_servers=[e.bootstrap_servers])
+
+for message in consumer:
+    print (message)
+
 for T in consumer:
-    print(f"{T} oC received")
+    print(f"{T.value} oC received")
 
 if T > 4:
     ph = 3
