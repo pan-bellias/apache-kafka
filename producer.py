@@ -18,8 +18,8 @@ def send_temperature():
 
     print(f"Temperature: {T} oC")
 
-    producer.send(e.topic_a, T)
-    producer.send(e.topic_b, T)
+    producer.send(e.topic_a, key=b'Temperature', value=T)
+    producer.send(e.topic_b, key=b'Temperature', value=T)
     producer.flush()
 
 send_temperature()
