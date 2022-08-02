@@ -1,15 +1,16 @@
 from kafka import KafkaConsumer, KafkaProducer
-from kafka.errors import KafkaError
 import env as e
-import math
+import math, json
 
-consumer = KafkaConsumer(e.topic_a, bootstrap_servers=[e.bootstrap_servers])
+consumer = KafkaConsumer(
+    e.topic_a,
+    bootstrap_servers=[e.bootstrap_servers],
+    value_deserializer=lambda v: json.loads(v.decode('utf-8'))
+)
 
-for message in consumer:
-    print (message)
-
-for T in consumer:
-    print(f"{T.value} oC received")
+for c in consumer:
+    T = c.value
+    break
 
 if T > 4:
     ph = 3
@@ -20,15 +21,13 @@ else:
 
 print(f"PH = {ph}")
 if ph < 0: print("Warning! PH is negative number!")
-if ph > 14: print("Warning! PH is greater than 14!")
+elif ph > 14: print("Warning! PH is greater than 14!")
+else: print("Successful PH Calculation")
 
-producer = KafkaProducer(bootstrap_servers=[e.bootstrap_servers])
+producer = KafkaProducer(
+    bootstrap_servers=[e.bootstrap_servers],
+    value_serializer=lambda m: json.dumps(m).encode('utf-8')
+)
 
-future = producer.send(e.topic_b, ph)
-try:
-    record_metadata = future.get(timeout=50)
-except KafkaError:
-    print(str(KafkaError))
-    pass
-
-print(f"PH with value {record_metadata.value} sent to script 3")
+producer.send(e.topic_b, ph)
+producer.flush()
