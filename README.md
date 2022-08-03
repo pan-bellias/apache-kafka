@@ -9,7 +9,7 @@ docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic my
 docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic my-topic-b
 ```
 
-## dotenv variables
+### dotenv variables
 ```bash
 cp .env.example .env
 ```
@@ -17,6 +17,15 @@ cp .env.example .env
 TOPIC_A='my-topic-a'
 TOPIC_B='my-topic-b'
 BOOTSTRAP_SERVER='localhost:9092'
+```
+
+## Kafka K8S Deployment
+```bash
+kubectl apply -f k8s
+kubectl port-forward <KAFKA-POD-NAME> 9092 -n kafka
+
+# create topics using:
+kubectl exec --tty -i <KAFKA-POD-NAME> -n kafka -- opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic <TOPIC-NAME>
 ```
 
 ## Run Example
