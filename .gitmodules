@@ -1,0 +1,4 @@
+[submodule "cp-helm-charts"]
+	path = cp-helm-charts
+	url = git@github.com:pan-bellias/cp-helm-charts.git
+	branch = master
