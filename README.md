@@ -2,7 +2,7 @@
 
 ## Kafka Docker Deployment
 ```bash
-cd docker && docker-compose up -d && cd ..
+docker-compose up -d
 
 # create topics my-topic-a and my-topic-b
 docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic my-topic-a
