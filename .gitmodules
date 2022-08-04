@@ -2,3 +2,7 @@
 	path = cp-helm-charts
 	url = git@github.com:pan-bellias/cp-helm-charts.git
 	branch = master
+[submodule "helm-charts"]
+	path = helm-charts
+	url = git@github.com:pan-bellias/helm-charts.git
+	branch = master
