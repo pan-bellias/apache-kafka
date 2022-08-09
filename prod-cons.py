@@ -3,10 +3,17 @@ import env as e
 import math, json
 import threading
 
+print(e.topic_a)
+
 consumer = KafkaConsumer(
     e.topic_a,
     bootstrap_servers=[e.bootstrap_servers],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
+)
+
+producer = KafkaProducer(
+    bootstrap_servers=[e.bootstrap_servers],
+    value_serializer=lambda m: json.dumps(m).encode('utf-8')
 )
 
 def send_ph():
@@ -25,11 +32,6 @@ def send_ph():
     if ph < 0: print("Warning! PH is negative number!")
     elif ph > 14: print("Warning! PH is greater than 14!")
     else: print("Successful PH Calculation")
-
-    producer = KafkaProducer(
-        bootstrap_servers=[e.bootstrap_servers],
-        value_serializer=lambda m: json.dumps(m).encode('utf-8')
-    )
 
     producer.send(e.topic_b, key=b'PH', value=ph)
     producer.flush()
