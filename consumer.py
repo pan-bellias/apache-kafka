@@ -23,5 +23,7 @@ for c in consumer:
         prev_ts = ts
         if diff <= 2.5:
             print(f"Success!\nT={T} and ph={ph}\nsec={diff}")
+            sum = ph + T
+            print("Sum is: " + sum)
     else:
         prev_ts = ts
