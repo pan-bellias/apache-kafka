@@ -27,3 +27,4 @@ for c in consumer:
             print("Sum is: " + sum)
     else:
         prev_ts = ts
+        sum = 0

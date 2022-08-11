@@ -6,7 +6,7 @@ import json
 import threading
 
 producer = KafkaProducer(
-    bootstrap_servers=[e.bootstrap_servers],
+    bootstrap_servers=e.bootstrap_servers,
     value_serializer=lambda m: json.dumps(m).encode('utf-8')
 )
 
@@ -19,7 +19,9 @@ def send_temperature():
     print(f"Temperature: {T} oC")
 
     producer.send(e.topic_a, key=b'Temperature', value=T)
+    print("temp sent to topic no1")
     producer.send(e.topic_b, key=b'Temperature', value=T)
+    print("temp sent to topic no2")
     producer.flush()
 
 send_temperature()
