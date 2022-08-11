@@ -4,6 +4,7 @@ import json, time
 
 consumer = KafkaConsumer(
     e.topic_b,
+    e.group,
     bootstrap_servers=[e.bootstrap_servers],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
 )

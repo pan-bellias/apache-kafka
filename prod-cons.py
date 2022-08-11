@@ -7,6 +7,7 @@ print(e.topic_a)
 
 consumer = KafkaConsumer(
     e.topic_a,
+    e.group,
     bootstrap_servers=[e.bootstrap_servers],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
 )
