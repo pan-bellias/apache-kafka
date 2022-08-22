@@ -2,12 +2,13 @@ from kafka import KafkaConsumer, KafkaProducer
 import env as e
 import math, json
 import threading
+from time import sleep
 
 print(e.topic_a)
 
 consumer = KafkaConsumer(
     e.topic_a,
-    e.group,
+#    e.group,
     bootstrap_servers=[e.bootstrap_servers],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
 )
@@ -18,7 +19,9 @@ producer = KafkaProducer(
 )
 
 def send_ph():
-    threading.Timer(7.0, send_ph).start()
+    #threading.Timer(7.0, send_ph).start()
+#i=0
+#while i==0:
     for message in consumer:
         T = message.value
         break
@@ -36,5 +39,11 @@ def send_ph():
 
     producer.send(e.topic_b, key=b'PH', value=ph)
     producer.flush()
+    #sleep(7)
 
-send_ph()
+#send_ph()
+
+i=0
+while i==0:
+    send_ph()
+    sleep(7)

@@ -23,3 +23,4 @@ def send_temperature():
     producer.flush()
 
 send_temperature()
+
