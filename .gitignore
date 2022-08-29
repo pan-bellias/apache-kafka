@@ -3,3 +3,4 @@ pure/
 
 .venv/
 .env
+get_helm.sh
