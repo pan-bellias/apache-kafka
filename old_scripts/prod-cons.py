@@ -1,27 +1,28 @@
 from kafka import KafkaConsumer, KafkaProducer
-import env as e
+from os.path import dirname, join
 import math, json
 import threading
-from time import sleep
-
-print(e.topic_a)
+from dotenv import load_dotenv
+import os
+dotenv_path = join(dirname(__file__), '../.env')
+load_dotenv(dotenv_path)
+kafka_server=os.environ.get("BOOTSTRAP_SERVER")
+topic_a = os.environ.get("TOPIC_A")
 
 consumer = KafkaConsumer(
-    e.topic_a,
+    topic_a,
 #    e.group,
-    bootstrap_servers=[e.bootstrap_servers],
+    bootstrap_servers=[kafka_server],
     value_deserializer=lambda v: json.loads(v.decode('utf-8'))
 )
 
 producer = KafkaProducer(
-    bootstrap_servers=[e.bootstrap_servers],
+    bootstrap_servers=[kafka_server],
     value_serializer=lambda m: json.dumps(m).encode('utf-8')
 )
 
 def send_ph():
-    #threading.Timer(7.0, send_ph).start()
-#i=0
-#while i==0:
+    threading.Timer(7.0, send_ph).start()
     for message in consumer:
         T = message.value
         break
@@ -41,9 +42,9 @@ def send_ph():
     producer.flush()
     #sleep(7)
 
-#send_ph()
+send_ph()
 
-i=0
-while i==0:
-    send_ph()
-    sleep(7)
+#i=0
+#while i==0:
+#    send_ph()
+#    sleep(7)

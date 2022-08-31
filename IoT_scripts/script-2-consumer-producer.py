@@ -17,6 +17,6 @@ consumer = KafkaConsumer(
 )
 
 for message in consumer:
-    #message.value.decode('utf-8')
-    print("%s: key=%s value=%s" % (message.topic, message.key,
-                                          message.value))
+    t = message.value
+    print(t)
+    break
