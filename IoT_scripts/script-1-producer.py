@@ -20,7 +20,7 @@ while True:
         T = numpy.random.gamma(shape=2.0, scale=2.0)
     print(f"Generated temperature: {T}oC")
 
-    producer.send(os.environ.get("TOPIC_A"), key=b'Temperature', value=T)
+    producer.send('my-topic-a', key=b'Temperature', value=T)
     producer.send(os.environ.get("TOPIC_B"), key=b'Temperature', value=T)
     producer.flush()
     time.sleep(5)

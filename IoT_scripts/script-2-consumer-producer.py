@@ -11,12 +11,13 @@ dotenv_path = join(dirname(__file__), '../.env')
 load_dotenv(dotenv_path)
 # define kafka consumer
 consumer = KafkaConsumer(
-    os.environ.get("TOPIC_A"),
+    'my-topic-a',
     bootstrap_servers=[os.environ.get("BOOTSTRAP_SERVER")],
     value_deserializer=lambda m: json.loads(m.decode('utf-8'))
 )
 
 for message in consumer:
+    print(message)
     t = message.value
     print(t)
     break
