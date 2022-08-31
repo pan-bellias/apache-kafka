@@ -22,4 +22,5 @@ while True:
 
     producer.send(os.environ.get("TOPIC_A"), key=b'Temperature', value=T)
     producer.send(os.environ.get("TOPIC_B"), key=b'Temperature', value=T)
+    producer.flush()
     time.sleep(5)
