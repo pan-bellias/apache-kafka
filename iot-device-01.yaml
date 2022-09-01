@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: iot-device-01
+  name: iot-device-01
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-device-01
+  template:
+    metadata:
+      labels:
+        app: iot-device-01
+    spec:
+      containers:
+      - name: iot-device-01
+        image: ghcr.io/pan-bellias/iot-device-01:latest
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: regcred

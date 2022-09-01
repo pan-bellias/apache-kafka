@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: analytics
+  name: analytics
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+      - name: analytics
+        image: ghcr.io/pan-bellias/analytics:latest
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: regcred
