@@ -38,14 +38,9 @@ for c in consumer:
             data = {
                 "schema": {
                     "type": "struct",
-                    "optional": False,
+                    "optional": True,
                     "version": 1,
                     "fields": [
-                        {
-                            "field": "timestamp",
-                            "type": "timestamp",
-                            "optional": False
-                        },
                         {
                             "field": "temperature",
                             "type": "float32",
@@ -68,7 +63,6 @@ for c in consumer:
                         }
                     ],
                     "payload": {
-                        "timestamp": ts,
                         "temperature": T,
                         "ph": ph,
                         "sum": sum,
@@ -76,7 +70,7 @@ for c in consumer:
                     }
                 }
             }
-            producer.send('test-connect', value=data)
+            producer.send('test-connect-5', value=data)
 
     else:
         prev_ts = ts
