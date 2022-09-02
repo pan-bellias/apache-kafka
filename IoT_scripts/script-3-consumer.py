@@ -41,21 +41,23 @@ for c in consumer:
                     "optional": True,
                     "version": 1,
                     "fields": [
-                        {
-                            "field": "temperature",
-                            "type": "float32",
-                            "optional": False,
-                        },
-                        {
-                            "field": "ph",
-                            "type": "float32",
-                            "optional": False
-                        },
-                        {
-                            "field": "sum",
-                            "type": "float32",
-                            "optional": False
-                        },
+                        
+                        # {
+                        #     "field": "temperature",
+                        #     "type": "float32",
+                        #     "optional": False,
+                        # },
+                        # {
+                        #     "field": "ph",
+                        #     "type": "float32",
+                        #     "optional": False
+                        # },
+                        # {
+                        #     "field": "sum",
+                        #     "type": "float32",
+                        #     "optional": False
+                        # },
+                        
                         {
                             "field": "number",
                             "type": "int32",
@@ -63,14 +65,14 @@ for c in consumer:
                         }
                     ],
                     "payload": {
-                        "temperature": T,
-                        "ph": ph,
-                        "sum": sum,
-                        "number": counter
+                        #"temperature": T,
+                        #"ph": ph,
+                        #"sum": sum,
+                        "number": int(counter)
                     }
                 }
             }
-            producer.send('test-connect-5', value=data)
+            producer.send('test-connect-7', value=data)
 
     else:
         prev_ts = ts
