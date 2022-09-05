@@ -72,7 +72,7 @@ for c in consumer:
                     }
                 }
             }
-            producer.send('test-connect-7', value=data)
+            producer.send('test-connect-9', value=data)
 
     else:
         prev_ts = ts
